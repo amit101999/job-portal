@@ -96,8 +96,10 @@ exports.getJobsById = async (req, res) => {
 exports.getAdminJob = async (req, res) => {
     try {
         const id = req.user
-        console.log(id)
-        const jobs = await Job.find({ posted_by: id })
+        const jobs = await Job.find({ posted_by: id }).populate({
+            path: "company",
+            createdAt: -1
+        })
         if (!jobs) {
             return res.status(404).json({
                 message: "No job found by current user",

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { COMPANY_API_END_POINT } from '@/utils/constant'
 import { toast } from 'sonner'
-import { setSingleCompany } from '@/redux/CompanySlice'
+import { setSingleCompany } from '@/redux/companySlice'
 import { useDispatch } from 'react-redux'
 
 const CreateCompany = () => {
@@ -24,10 +24,10 @@ const CreateCompany = () => {
                 }, withCredentials: true
             })
             if (res.data.success) {
-                toast.success("res.data.success")
+                toast.success(res.data.message)
                 dispatch(setSingleCompany(res.data.company))
                 const cmpID = res?.data?.company?._id
-                navigate(`admin/companies/:${cmpID}`)
+                navigate(`/admin/companies/${cmpID}`)
             }
         } catch (err) {
             console.error("Error in registering new company", err)
@@ -46,7 +46,7 @@ const CreateCompany = () => {
                     onChange={(e) => setComapanyName(e.target.value)} />
                 <div className='flex items-center gap-2 my-10'>
                     <Button variant="outline" onClick={() => navigate("/admin/companies")}>Cancel</Button>
-                    <Button onClick={registerNewCompany} className="bg-black text-white rounded">Continue</Button>
+                    <Button onClick={registerNewCompany} className="bg-black text-white rounded hover:bg-blue-600">Continue</Button>
                 </div>
             </div>
         </div>

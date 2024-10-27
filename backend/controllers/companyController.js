@@ -1,17 +1,19 @@
 const Company = require('../models/Company')
+const getDataUri = require("../utils/dataUri")
+const cloudinary = require("../utils/cloudinary");
 
 exports.registerCompany = async (req, res) => {
     try {
 
         const { companyName, description } = req.body
 
-        if (!companyName || !description) {
-            return res.status(400)
-                .json({
-                    message: 'All fields are required in Company',
-                    success: false,
-                })
-        }
+        // if (!companyName || !description) {
+        //     return res.status(400)
+        //         .json({
+        //             message: 'All fields are required in Company',
+        //             success: false,
+        //         })
+        // }
         let company = await Company.findOne({ name: companyName })
 
         if (company) {
@@ -84,11 +86,14 @@ exports.getCompanyByID = async (req, res) => {
 exports.updateCompany = async (req, res) => {
     try {
         const id = req.params.id;
-        const { name, description, webiste, location } = req.body
-        //
+        const file = req.file
+        const { name, description, website, location } = req.body
 
-        const updateData = { name, description, webiste, location }
+        const fileUri = getDataUri(file)
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content)
+        const logo = cloudResponse.secure_url
 
+        const updateData = { name, description, website, location, logo }
         let company = await Company.findByIdAndUpdate(id, updateData, { new: true })
 
         if (!company) {

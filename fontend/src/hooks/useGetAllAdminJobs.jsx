@@ -1,26 +1,27 @@
-import { setAllJobs } from '@/redux/jobSlice';
+
+import { setAllAdminJob } from '@/redux/jobSlice';
 import { JOB_API_END_POINT } from '@/utils/constant'
 import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux';
 
-const useGetAllJobs = () => {
+const useGetAllAdminJobs = () => {
     const dispatch = useDispatch();
     useEffect(() => {
-        const fetchAllJobs = async () => {
+        const fetchAllAdminJobs = async () => {
             try {
-                const res = await axios.get(`${JOB_API_END_POINT}/get`, {
+                const res = await axios.get(`${JOB_API_END_POINT}/getAdminJobs`, {
                     withCredentials: true
                 })
                 if (res.data.success) {
-                    dispatch(setAllJobs(res.data.job))
+                    dispatch(setAllAdminJob(res.data.jobs))
                 }
             } catch (err) {
                 console.error(err)
             }
         }
-        fetchAllJobs()
-    },)
+        fetchAllAdminJobs()
+    }, [])
 }
 
-export default useGetAllJobs
+export default useGetAllAdminJobs

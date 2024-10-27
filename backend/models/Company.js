@@ -8,7 +8,6 @@ const companySchema = mongoose.Schema({
     },
     description: {
         type: String,
-        required: true
     },
     location: {
         type: String,
@@ -24,6 +23,6 @@ const companySchema = mongoose.Schema({
         ref: "User",
     },
 
-}, { timestamp: true })
+}, { timestamps: true })
 
 module.exports = mongoose.model("Company", companySchema)
