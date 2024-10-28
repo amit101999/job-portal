@@ -15,7 +15,7 @@ const applicationSchema = mongoose.Schema({
     status: {
         type: String,
         default: "pending",
-        enum: ["pending", "active", "reject"]
+        enum: ["pending", "accept", "reject"]
     }
 
 }, { timestamp: true })

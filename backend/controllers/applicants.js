@@ -102,7 +102,7 @@ exports.getApplicant = async (req, res) => {
 
 exports.updateStatus = async (req, res) => {
     try {
-        let status = req.body;
+        const { status } = req.body;
         const applicationId = req.params.id
         if (!status) {
             return res.status(404).json({

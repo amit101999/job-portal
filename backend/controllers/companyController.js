@@ -41,8 +41,9 @@ exports.registerCompany = async (req, res) => {
 
 exports.getCompany = async (req, res) => {
     try {
-        const userId = req.id
-        let company = await Company.find(userId)
+        const userId = req.user
+        console.log(userId)
+        let company = await Company.find({ userId: userId })
 
         if (!company) {
             return res.status(404)

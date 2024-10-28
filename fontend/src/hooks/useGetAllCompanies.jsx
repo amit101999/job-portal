@@ -13,6 +13,8 @@ const useGetAllCompanies = () => {
                     withCredentials: true
                 })
 
+                console.log(res.data)
+
                 if (res.data.success) {
                     dispatch(setCompanies(res.data.company))
                 }

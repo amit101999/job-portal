@@ -2,11 +2,34 @@ import React from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { MoreHorizontal } from 'lucide-react'
+import { useSelector } from 'react-redux'
+import { toast } from 'sonner'
+import axios from 'axios'
+import { APPLICATION_API_END_POINT } from '@/utils/constant'
 
 
-const shortedListedStatus = ["Accepted", "rejected"]
+const shortedListedStatus = ["Accept", "Reject"]
 
 const ApplicantsTable = () => {
+
+    const statusHandler = async (status, id) => {
+        console.log(status, id)
+        try {
+            const res = await axios.post(`${APPLICATION_API_END_POINT}/status/${id}/update`, { status }, {
+                withCredentials: true
+            })
+            if (res.data.success) {
+                toast.success("Status updated successfully")
+            }
+        } catch (err) {
+            toast.error("Error in updating status ", err)
+            console.log("Error in updating status", err)
+        }
+    }
+
+
+    const { allApplicants } = useSelector((store) => store.application)
+
     return (
         <div>
             <Table >
@@ -22,32 +45,35 @@ const ApplicantsTable = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {/* <tr */}
-                    <TableRow>
-                        <TableCell>amit thakur</TableCell>
-                        <TableCell>amit@gmal</TableCell>
-                        <TableCell>863091968</TableCell>
-                        <TableCell>amit.pdf</TableCell>
-                        <TableCell>20/15/2024</TableCell>
-                        <TableCell className="text-right">
-                            <Popover>
-                                <PopoverTrigger>
-                                    <MoreHorizontal />
-                                    <PopoverContent className="w-32">
-                                        {
-                                            shortedListedStatus.map((status, index) => (
-                                                <div key={index} className='flex w-fit cursor-pointer items-center my-2'>
-                                                    <span>{status}</span>
-                                                </div>
-                                            ))
-                                        }
-                                    </PopoverContent>
-                                </PopoverTrigger>
-                            </Popover>
+                    {
+                        allApplicants && allApplicants?.applications?.map((item) => (
 
-                        </TableCell>
-                    </TableRow>
-                    {/* </tr> */}
+                            <TableRow>
+                                <TableCell>{item.applicant?.fullname}</TableCell>
+                                <TableCell>{item.applicant?.email}</TableCell>
+                                <TableCell>{item.applicant?.phoneNumber}</TableCell>
+                                <TableCell className="text-blue-600 cursor-pointer"><a href={item.applicant?.profile?.resume}>{item.applicant?.profile?.resumeOriginalName}</a></TableCell>
+                                <TableCell> {allApplicants.createdAt.split("T")[0]} </TableCell>
+                                <TableCell className="text-right">
+                                    <Popover>
+                                        <PopoverTrigger>
+                                            <MoreHorizontal />
+                                            <PopoverContent className="w-32">
+                                                {
+                                                    shortedListedStatus.map((status, index) => (
+                                                        <div onClick={() => { statusHandler(status, item?._id) }} key={index} className='flex w-fit cursor-pointer items-center my-2 '>
+                                                            <span className='hover:font-bold'>{status}</span>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </PopoverContent>
+                                        </PopoverTrigger>
+                                    </Popover>
+
+                                </TableCell>
+                            </TableRow >
+                        ))
+                    }
                 </TableBody>
             </Table>
         </div >

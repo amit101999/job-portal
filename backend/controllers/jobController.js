@@ -4,8 +4,6 @@ exports.postJob = async (req, res) => {
     const { title, description, requirements, salary,
         location, jobType, exprience, position, companyId } = req.body
 
-    console.log(requirements, title)
-
     // if (!title || !description || !requirements || !salary ||
     //     !location || !jobType || !exprience || !position || !companyId) {
     //     return res.status(400).json({
@@ -42,13 +40,13 @@ exports.postJob = async (req, res) => {
 
 exports.getJobs = async (req, res) => {
     try {
-        const keywords = req.query.keywords || ""
+        const keyword = req.query.keyword || ""
         const query = {
             $or: [
-                { title: { $regex: keywords, $options: "i" } },
-                { description: { $regex: keywords, $options: "i" } },
+                { title: { $regex: keyword, $options: "i" } },
+                { description: { $regex: keyword, $options: "i" } },
             ]
-        }
+        };
         const jobs = await Job.find(query).populate({
             path: "company",
         }).sort({ createdAt: -1 })

@@ -10,9 +10,8 @@ const Job = ({ job }) => {
     const navigate = useNavigate()
 
     const daysAgoFunction = () => {
-
         const currentDate = new Date().getDate();
-        const documentCreatedDate = new Date(job.createdAt).getDate();
+        const documentCreatedDate = new Date(job?.createdAt).getDate();
 
         return currentDate - documentCreatedDate == 0 ? "Today" : `${currentDate - documentCreatedDate} days ago`
 
