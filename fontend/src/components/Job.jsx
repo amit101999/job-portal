@@ -9,10 +9,6 @@ import { current } from '@reduxjs/toolkit'
 const Job = ({ job }) => {
     const navigate = useNavigate()
 
-    // console.log()
-
-    console.log()
-
     const daysAgoFunction = () => {
 
         const currentDate = new Date().getDate();
@@ -31,7 +27,7 @@ const Job = ({ job }) => {
             <div className='flex my-2 gap-2 items-center'>
                 <Button className="p-6" variant="outline" size="icon" >
                     <Avatar>
-                        <AvatarImage src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwm2crnRitxC5fh95sHn-NIvLHH1CyORvr9g&s" />
+                        <AvatarImage src={job?.company?.logo} />
                     </Avatar>
                 </Button>
                 <div>

@@ -4,6 +4,8 @@ exports.postJob = async (req, res) => {
     const { title, description, requirements, salary,
         location, jobType, exprience, position, companyId } = req.body
 
+    console.log(requirements, title)
+
     // if (!title || !description || !requirements || !salary ||
     //     !location || !jobType || !exprience || !position || !companyId) {
     //     return res.status(400).json({
