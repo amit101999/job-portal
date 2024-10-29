@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "install-server": "cd backend && npm install",
+    "start-server": "cd backend && nodemon index.js",
+    "install-client": "cd fontend && npm install",
+    "build-client": "cd fontend && npm run build",
+    "start-client": "cd fontend && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
