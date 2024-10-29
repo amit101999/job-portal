@@ -18,7 +18,7 @@ app.use(cookieParser());
 
 const options = {
     // origin: "http://localhost:5173",
-    origin: "https://job-portal-my.netlify.app/",
+    origin: "https://job-portal-my.netlify.app",
     credentials: true
 }
 
